@@ -7,6 +7,7 @@ $db = [
 ];
 $link = mysqli_connect($db['host'], $db['user'], $db['password'], $db['database']);
 mysqli_set_charset($link,'utf8');
+
 function get_query_list_goods(){
     $sql = 'SELECT lots.id, `date_creation`, `title`, `lot_description`, `img`, `start_price`, `date_finish`, `step`, `user_id`, `winner_id`, `category_id`, categories.name_category FROM `lots` JOIN categories on category_id = categories.id 
          ORDER BY `date_creation` DESC';
@@ -75,4 +76,37 @@ function get_login($con, $email) {
         return $error;
     }
 }
+function get_found_lots($link, $words, $limit, $offset) {
+    $sql = "SELECT lots.id, lots.title, lots.start_price, lots.img, lots.date_finish, categories.name_category FROM lots
+    JOIN categories ON lots.category_id=categories.id
+    WHERE MATCH(title, lot_description) AGAINST(?) ORDER BY date_creation DESC LIMIT $limit OFFSET $offset;";
+
+    $stmt = mysqli_prepare($link, $sql);
+    mysqli_stmt_bind_param($stmt, 's', $words);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    if ($res) {
+        $goods = get_arrow($res);
+        return $goods;
+    }
+    $error = mysqli_error($link);
+    return $error;
+}
+
+function get_count_lots($link, $words) {
+    $sql = "SELECT COUNT(*) as cnt FROM lots
+    WHERE MATCH(title, lot_description) AGAINST(?);";
+
+    $stmt = mysqli_prepare($link, $sql);
+    mysqli_stmt_bind_param($stmt, 's', $words);
+    mysqli_stmt_execute($stmt);
+    $res = mysqli_stmt_get_result($stmt);
+    if ($res) {
+        $count = mysqli_fetch_assoc($res)["cnt"];
+        return $count;
+    }
+    $error = mysqli_error($link);
+    return $error;
+    }
+
 ?>

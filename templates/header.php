@@ -1,4 +1,15 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $title; ?></title>
+    <link href="../css/normalize.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/flatpickr.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="page-wrapper">
 <header class="main-header">
 
     <div class="main-header__container container">
@@ -7,7 +18,7 @@
             <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="search.php" autocomplete="off">
-            <input type="search" name="search" placeholder="Поиск лота">
+            <input type="search" name="search" placeholder="Поиск лота" value="">
             <input class="main-header__search-btn" type="submit" name="find" value="Найти">
         </form>
         <?php $url = !$is_auth ? "403.php":"add.php"; ?>

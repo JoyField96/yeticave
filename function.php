@@ -1,11 +1,9 @@
 <?php
 function format_sum ($num){
     $num = ceil($num);
-    if($num < 1000){
-        return $num;
-    } else{
-        return $num = number_format($num, 0, '', ' ') . " "."₽";
-    }
+    $num = number_format($num, 0, '', ' ');
+
+    return "$num ₽";
 }
 
 function goods_timer ($date)
@@ -26,6 +24,7 @@ function goods_timer ($date)
 
         return $res;
     }
+
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
  *
@@ -81,6 +80,7 @@ function db_get_prepare_stmt_version($link, $sql, $data = []) {
  * @return array
  */
 function get_arrow ($result_query) {
+   $arrow = null;
     $row = mysqli_num_rows($result_query);
     if ($row === 1) {
         $arrow = mysqli_fetch_assoc($result_query);
