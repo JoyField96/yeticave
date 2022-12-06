@@ -12,7 +12,10 @@ $goods = get_query_list_goods();
 $cat_mass = get_query_categories();
 
 
-
+if ($is_auth) {
+    $bets = get_bets($link, $_SESSION["id"]);
+    $user_id = $_SESSION["id"];
+}
 
 $header = include_template('header.php',
     [
@@ -20,10 +23,12 @@ $header = include_template('header.php',
         "user_name" => $user_name
     ]);
 
-$page_content = include_template('main.php',
+$page_content = include_template('my-bets.php',
     [
-    'cat_mass'=>$cat_mass,
-        'goods'=>$goods
+        'cat_mass'=>$cat_mass,
+        'goods'=>$goods,
+        'bets'=> $bets,
+        'user_id'=> $user_id
     ]);
 
 
@@ -39,8 +44,6 @@ $layout_content = include_template('layout.php', [
     'goods'=>$goods,
     'cat_mass'=>$cat_mass,
     "main_footer" =>$footer,
-    'title'=> 'YetiCave - главная страница'
-
-]);
+    'title'=> 'мои ставки']);
 print($layout_content);
 ?>

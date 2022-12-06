@@ -1,0 +1,20 @@
+{
+    "name": "admin/yeticave",
+    "description": "test project",
+    "type": "project",
+    "license": "none",
+    "autoload": {
+        "psr-4": {
+            "Admin\\Yeticave\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Admin",
+            "email": "mor.96@mail.ru"
+        }
+    ],
+    "require": {
+        "respect/validation": "^2.2"
+    }
+}
